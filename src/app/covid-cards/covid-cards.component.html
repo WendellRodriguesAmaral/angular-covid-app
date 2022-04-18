@@ -1,0 +1,38 @@
+<main>
+    <h1 class="text-center">Situação de COVID-19 no Brasil</h1>
+    <div class="loading" *ngIf="verifyData()">
+        <div class="spinner-border"  role="status">
+            <span class="sr-only"></span>
+        </div>
+        <p>Loading...</p>
+    </div>
+      
+    <div class="cards">
+        <div class="card" *ngFor="let estado of estados">
+            <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{estado.uf}}.png" class="img-estado" alt="Bandeira do estado {{estado.state}}">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{estado.state}}
+                </h5>
+                <br>
+                <small class="card-text">
+                    Última atualização: {{estado.datetime | date:'d/MM/yy'}}
+                </small>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" >                
+                    Casos: {{formatValues(estado.cases)}}                    
+                </li>
+                <li class="list-group-item">                
+                    Mortes: {{formatValues(estado.deaths)}}                    
+                </li>
+                <li class="list-group-item">                
+                    Suspeitos: {{formatValues(estado.suspects)}}                    
+                </li>
+            </ul>
+            <div class="card-body">
+                <a href="https://www.google.com/search?q=covid+{{estado.state}}" target="_blank" >Mais informações</a>        
+            </div>
+        </div>   
+    </div>
+</main>
