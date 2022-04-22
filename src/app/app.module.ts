@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {HttpClientModule } from '@angular/common/http';
 
 import { CovidCardsComponent } from './covid-cards/covid-cards.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,9 @@ import { CovidCardsComponent } from './covid-cards/covid-cards.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,8 +7,15 @@ export interface CovidCards {
     suspects: number;
     refuses: number;
     datetime: string;
+    country:  string;
+    confirmed:  number;
+    recovered: number;
+    updated_at: string;
 }
 
 export interface Content<T> {
     data: T;
 }
+
+
+

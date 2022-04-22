@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Content, CovidCards } from '../models/covid-cards.model';
 import { CovidCardService } from '../services/covid-card.service';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -13,32 +13,42 @@ import { takeUntil } from 'rxjs/operators';
 
 export class CovidCardsComponent implements OnInit {
 
-  estados: CovidCards[] = []
-  unsubscribeAll: Subject<any>;
+  options:string[]=[
+    "Por estado",
+    "Por país"
+  ] 
 
+  isSelected:string=this.options[0];
+  loading:boolean = false; //para não começar renderizando o loading
+  localizacoes: CovidCards[] = []
+  unsubscribeAll: Subject<any>;
+  
   constructor(private readonly service: CovidCardService) {
     this.unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-    this.getCards()
+    this.filterCards(this.isSelected)
   }
 
-  getCards(): void {
-    this.service.getCovidsData()//observable
-      .pipe(takeUntil(this.unsubscribeAll)) 
-      .subscribe((dados: Content<Array<CovidCards>>) => this.estados = dados.data)
+  filterCards(escolha:string){
+    let filter:string='';    
+    if(escolha==="Por país") filter = 'countries';  
+    this.getCards(filter)
   }
 
-  verifyData() {
-    if(this.estados.length===0){
-      return true;
-    } else{
-      return false;
-    }
+  getCards(escolha:string): void {   
+    this.loading=true;
+    this.service.getCovidsData(escolha)//observable
+      .pipe(
+        takeUntil(this.unsubscribeAll),
+        finalize(()=>this.loading=false) ) // depois que termina a requisição
+      .subscribe((dados: Content<Array<CovidCards>>) => this.localizacoes = dados.data)
   }
+
 
   formatValues(value: number): string {
+    if(value== null) return 'Dado não encontrado.';
     return value.toString()
       .replace(/(\d{1,3})(\d{3})(\d{3})/, "$1.$2.$3")
       .replace(/(\d{1,3})(\d{3})/, "$1.$2")
@@ -48,7 +58,6 @@ export class CovidCardsComponent implements OnInit {
     this.unsubscribeAll.next();
     this.unsubscribeAll.complete();
   }
-
 }
 
 

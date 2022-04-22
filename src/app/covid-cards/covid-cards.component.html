@@ -1,38 +1,51 @@
 <main>
-    <h1 class="text-center">Situação de COVID-19 no Brasil</h1>
-    <div class="loading" *ngIf="verifyData()">
-        <div class="spinner-border"  role="status">
-            <span class="sr-only"></span>
+    <h1 class="text-center mb-5">Situação de COVID-19 no Brasil e no mundo.</h1>
+    <h5>Listar por:</h5>
+
+    <select class="form-select w-25" [(ngModel)]="isSelected" (ngModelChange)="filterCards($event)">
+        <option class="item" [ngValue]="option" *ngFor="let option of options">{{option}}</option>
+    </select>
+
+    <ng-template [ngIf]="!loading" [ngIfElse]="loadingTemplate"> <!-- PESQUISAR -->
+        <div class="cards" *ngIf="localizacoes.length > 0"  >
+            <div class="card" *ngFor="let localizacao of localizacoes">
+                <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
+                    onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
+                    class="img-localizacao" alt="Bandeira do(a) {{localizacao.state}}">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{localizacao.state || localizacao.country }}
+                    </h5>
+                    <br>
+                    <small class="card-text">
+                        Última atualização: {{localizacao.datetime || localizacao.updated_at | date:'d/MM/yy'}}
+                    </small>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        Casos: {{formatValues(localizacao.cases)}}
+                    </li>
+                    <li class="list-group-item">
+                        Mortes: {{formatValues(localizacao.deaths)}}
+                    </li>
+                    <li class="list-group-item">
+                        Suspeitos: {{formatValues(localizacao.suspects || localizacao.confirmed)}}
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a href="https://www.google.com/search?q=covid+{{localizacao.state || localizacao.country}}"
+                        target="_blank">Mais informações</a>
+                </div>
+            </div>
         </div>
-        <p>Loading...</p>
-    </div>
-      
-    <div class="cards">
-        <div class="card" *ngFor="let estado of estados">
-            <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{estado.uf}}.png" class="img-estado" alt="Bandeira do estado {{estado.state}}">
-            <div class="card-body">
-                <h5 class="card-title">
-                    {{estado.state}}
-                </h5>
-                <br>
-                <small class="card-text">
-                    Última atualização: {{estado.datetime | date:'d/MM/yy'}}
-                </small>
+    </ng-template>
+
+    <ng-template #loadingTemplate>
+        <div class="loading">
+            <div class="spinner-border" role="status">
+                <span class="sr-only"></span>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item" >                
-                    Casos: {{formatValues(estado.cases)}}                    
-                </li>
-                <li class="list-group-item">                
-                    Mortes: {{formatValues(estado.deaths)}}                    
-                </li>
-                <li class="list-group-item">                
-                    Suspeitos: {{formatValues(estado.suspects)}}                    
-                </li>
-            </ul>
-            <div class="card-body">
-                <a href="https://www.google.com/search?q=covid+{{estado.state}}" target="_blank" >Mais informações</a>        
-            </div>
-        </div>   
-    </div>
+            <p>Loading...</p>
+        </div>
+    </ng-template>
 </main>

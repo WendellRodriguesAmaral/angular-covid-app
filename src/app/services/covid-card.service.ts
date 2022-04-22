@@ -13,7 +13,7 @@ export class CovidCardService {
 
   constructor( private http:HttpClient) { }
   
-  getCovidsData():Observable<Content<Array<CovidCards>>>{
-    return this.http.get<Content<Array<CovidCards>>>(`${environment.urlPath}report/v${this.version}`)
+  getCovidsData(args?: string):Observable<Content<Array<CovidCards>>>{
+    return this.http.get<Content<Array<CovidCards>>>(`${environment.urlPath}report/v${this.version}/${args}`)
   }
 }
