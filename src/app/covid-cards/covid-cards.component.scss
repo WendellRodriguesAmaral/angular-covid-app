@@ -1,62 +1,61 @@
-main{
+@import '../../assets/sass/mixins.scss';
+
+.covid{
      background-color:rgb(209, 209, 209);
      padding-top:2rem;
      width:100%;
      min-height:100vh;
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-}
+    @include flex(flex,column,center);
 
-.cards{
-    width: 90%;
-    margin: 5rem auto 0 auto;
-    display:flex;
-    justify-content:center;
-    flex-wrap: wrap;    
-}
+    &__field{
+        min-width: 200px;
+    }
 
-.loading{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
+    .cards{
+        width: 90%;
+        margin: 5rem auto 0 auto;
+        display:flex;
+        justify-content:center;
+        flex-wrap: wrap;   
+        
+        &__item{
+            width: 18rem;
+            margin:1rem;    
+            border-radius: 5px;
+            background-color:rgb(246, 246, 246);
+            @include shadow(2px 2px 10px 2px);
 
-.spinner-border{
-    width: 4rem;
-    height: 4rem;
-    margin-bottom:1rem;
-    margin-top:1rem
-}
+            &:hover{
+                transform: scale(1.05);
+                transition: all .5s;
+                background-color:rgb(255, 255, 255);
+                @include shadow(5px 2px 5px 1px);
+            }          
+        }
 
-.card{
-    width: 18rem;
-    margin:1rem;    
-    border-radius: 5px;
-    box-shadow: 2px 2px 10px 2px rgb(161, 160, 160);    
-    background-color:rgb(246, 246, 246);
-}
+        &__img-localizacao{ 
+            width: 3rem;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            @include shadow(2px 2px 5px 1px);
+        }  
 
+        &--link a{ 
+            text-decoration: none;
+        }     
+    }
 
-.card:hover{
-    transform: scale(1.05);
-    transition: all .5s;
-    box-shadow: 5px 2px 5px 1px rgb(161, 160, 160);
-    background-color:rgb(255, 255, 255);
-}
+    .loading{
+        @include flex(flex,column,center);
 
-.img-localizacao{
-    width: 3rem;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    box-shadow: 2px 2px 5px 1px rgb(161, 160, 160);
-}
+        &__spinner{
+            width: 4rem;
+            height: 4rem;
+            margin-bottom:1rem;
+            margin-top:1rem
+        }
+    }
+        
+    }
 
-a{
-    text-decoration: none;
-}
-
-.form-select{
-    min-width: 200px;
-}

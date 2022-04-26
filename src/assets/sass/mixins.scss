@@ -1,0 +1,9 @@
+@mixin flex($display, $direction, $align) {
+    display: $display;
+    flex-direction: $direction ;
+    align-items: $align;
+}
+
+@mixin shadow( $values...){
+    box-shadow: $values rgb(161, 160, 160);
+}

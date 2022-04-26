@@ -1,17 +1,17 @@
-<main>
+<main class="covid">
     <h1 class="text-center mb-5">Situação de COVID-19 no Brasil e no mundo.</h1>
     <h5>Listar por:</h5>
 
-    <select class="form-select w-25" [(ngModel)]="isSelected" (ngModelChange)="filterCards($event)">
+    <select class="form-select w-25 covid__field" [(ngModel)]="isSelected" (ngModelChange)="filterCards($event)">
         <option class="item" [ngValue]="option" *ngFor="let option of options">{{option}}</option>
     </select>
 
-    <ng-template [ngIf]="!loading" [ngIfElse]="loadingTemplate"> <!-- PESQUISAR -->
+    <ng-template [ngIf]="!loading" [ngIfElse]="loadingTemplate"> 
         <div class="cards" *ngIf="localizacoes.length > 0"  >
-            <div class="card" *ngFor="let localizacao of localizacoes">
+            <div class="card cards__item" *ngFor="let localizacao of localizacoes">
                 <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
                     onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
-                    class="img-localizacao" alt="Bandeira do(a) {{localizacao.state}}">
+                    class="cards__img-localizacao" alt="Bandeira do(a) {{localizacao.state}}"> 
                 <div class="card-body">
                     <h5 class="card-title">
                         {{localizacao.state || localizacao.country }}
@@ -32,7 +32,7 @@
                         Suspeitos: {{formatValues(localizacao.suspects || localizacao.confirmed)}}
                     </li>
                 </ul>
-                <div class="card-body">
+                <div class="card-body cards--link">  
                     <a href="https://www.google.com/search?q=covid+{{localizacao.state || localizacao.country}}"
                         target="_blank">Mais informações</a>
                 </div>
@@ -42,7 +42,7 @@
 
     <ng-template #loadingTemplate>
         <div class="loading">
-            <div class="spinner-border" role="status">
+            <div class="spinner-border loading__spinner" role="status">
                 <span class="sr-only"></span>
             </div>
             <p>Loading...</p>
