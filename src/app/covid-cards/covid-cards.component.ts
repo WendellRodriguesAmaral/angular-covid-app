@@ -22,6 +22,7 @@ export class CovidCardsComponent implements OnInit {
   loading:boolean = false; //para não começar renderizando o loading
   localizacoes: CovidCards[] = []
   unsubscribeAll: Subject<any>;
+  isCountry:boolean = false;
   
   constructor(private readonly service: CovidCardService) {
     this.unsubscribeAll = new Subject();
@@ -33,7 +34,12 @@ export class CovidCardsComponent implements OnInit {
 
   filterCards(escolha:string){
     let filter:string='';    
-    if(escolha==="Por país") filter = 'countries';  
+    if(escolha==="Por país") {
+      filter = 'countries'; 
+      this.isCountry=true; 
+    }else{
+      this.isCountry=false;
+    }
     this.getCards(filter)
   }
 

@@ -46,6 +46,37 @@
         }     
     }
 
+    .button{
+        &__modal{
+            margin-top:2rem;
+            margin-bottom:3rem;
+        }
+    }
+
+    .modal{
+        &__links{
+            @include flex(flex,row,center);
+            flex-wrap: wrap;
+            gap:2rem;
+            //  justify-content: space-between;            
+        }
+
+        &--link{
+            text-decoration: none;
+            color:grey;
+
+            img{
+                width: 5rem;          
+                @include shadow(2px 2px 2px 1px);
+
+                &:hover{
+                    transform:scale(1.1);
+                    transition: transform .4s;
+                }
+            }
+        }
+    }
+
     .loading{
         @include flex(flex,column,center);
 
@@ -57,5 +88,5 @@
         }
     }
         
-    }
+}
 
