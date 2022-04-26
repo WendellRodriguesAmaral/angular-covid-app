@@ -1,3 +1,5 @@
+
+
 <main class="covid">
     
     <h1 class="text-center mb-5">Situação de COVID-19 no Brasil e no mundo.</h1>
@@ -30,12 +32,30 @@
                         Mortes: {{formatValues(localizacao.deaths)}}
                     </li>
                     <li class="list-group-item">
-                        Suspeitos: {{formatValues(localizacao.suspects || localizacao.confirmed)}}
+                        Infectados: {{formatValues(localizacao.suspects || localizacao.confirmed)}}
                     </li>
                 </ul>
-                <div class="card-body cards--link">  
-                    <a href="https://www.google.com/search?q=covid+{{localizacao.state || localizacao.country}}"
-                        target="_blank">Mais informações</a>
+                <div class="card-body">  
+                    <modal-card > 
+                        <h3 class="text-center" *ngIf="localizacao.state || localizacao.country"> {{localizacao.state || localizacao.country }}</h3>
+
+                        <img  width="100" src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
+                        onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
+                        alt="Bandeira do(a) {{localizacao.state}}"> 
+                        <br>
+                        <br>
+                        <p *ngIf="localizacao.uid ">DDD: {{localizacao.uid }}</p>
+                        <p *ngIf="localizacao.uf ">Sigla: {{localizacao.uf }}</p>
+                        <p *ngIf="localizacao.cases">Casos: {{formatValues(localizacao.cases)}}</p>
+                        <p *ngIf="localizacao.deaths">Mortes: {{formatValues(localizacao.deaths) }}</p>
+                        <p *ngIf="localizacao.suspects || localizacao.confirmed">Infectados: {{formatValues(localizacao.suspects || localizacao.confirmed) }}</p>
+                        <p *ngIf="localizacao.refuses || localizacao.recovered">Recuperados: {{formatValues(localizacao.refuses || localizacao.recovered) }}</p>
+                        <p *ngIf="localizacao.datetime || localizacao.updated_at">Última atualização: {{localizacao.datetime || localizacao.updated_at | date:'d/MM/yy'}}</p>                       
+
+                        <div class="d-flex justify-content-end p-2">
+                            <a  class="btn btn-primary w-50" href="https://pt.wikipedia.org/wiki/{{localizacao.state || localizacao.country}}" target="_blank">Ir para wikipedia</a>
+                          </div>
+                    </modal-card>
                 </div>
             </div>
         </div>
@@ -79,4 +99,6 @@
         </div>
     </ng-template>
 </main>
+
+
 

@@ -5,6 +5,7 @@ import { CovidCardService } from '../services/covid-card.service';
 import { finalize, takeUntil } from 'rxjs/operators';
 
 
+
 @Component({
   selector: 'app-covid-cards',
   templateUrl: './covid-cards.component.html',
@@ -64,6 +65,12 @@ export class CovidCardsComponent implements OnInit {
     this.unsubscribeAll.next();
     this.unsubscribeAll.complete();
   }
+
 }
+
+
+
+
+
 
 
