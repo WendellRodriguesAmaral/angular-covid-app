@@ -8,7 +8,29 @@
     </button>
   </div>
   <div class="modal-body" >
-    <ng-content></ng-content>
+    <h3 class="text-center" *ngIf="localizacaoModal.state || localizacaoModal.country"> {{localizacaoModal.state || localizacaoModal.country }}</h3>
+
+    <img  width="100" src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacaoModal.uf}}.png"
+    onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
+    alt="Bandeira do(a) {{localizacaoModal.state}}"> 
+    <br>
+    <br>
+    <p *ngIf="localizacaoModal.uid ">DDD: {{localizacaoModal.uid }}</p>
+    <p *ngIf="localizacaoModal.uf ">Sigla: {{localizacaoModal.uf }}</p>
+    <p *ngIf="localizacaoModal.cases">Casos: {{format(localizacaoModal.cases)}}</p>
+    <p *ngIf="localizacaoModal.deaths">Mortes: {{format(localizacaoModal.deaths) }}</p>
+    <p *ngIf="localizacaoModal.suspects || localizacaoModal.confirmed">Infectados: {{format(localizacaoModal.suspects || localizacaoModal.confirmed) }}</p>
+    <p *ngIf="localizacaoModal.refuses || localizacaoModal.recovered">Recuperados: {{format(localizacaoModal.refuses || localizacaoModal.recovered) }}</p>
+    <p *ngIf="localizacaoModal.datetime || localizacaoModal.updated_at">Última atualização: {{localizacaoModal.datetime || localizacaoModal.updated_at | date:'d/MM/yy'}}</p>                       
+
+    <div class="d-flex justify-content-end p-2">
+        <a  class="btn btn-primary w-50" href="https://pt.wikipedia.org/wiki/{{localizacaoModal.state || localizacaoModal.country}}" target="_blank">Ir para wikipedia</a>
+    </div>
+    
   </div>
  
 </ng-template>
+
+
+
+
