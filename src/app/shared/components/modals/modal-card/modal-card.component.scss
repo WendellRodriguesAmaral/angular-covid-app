@@ -1,0 +1,12 @@
+@import '../../../../../assets/sass/mixins.scss';
+
+.modal-header{
+    
+    &__flag{
+        width: 60px;
+        position: absolute;
+        right: 50px;
+        opacity: 1;
+        @include shadow(5px 2px 5px 1px);
+    }
+}
