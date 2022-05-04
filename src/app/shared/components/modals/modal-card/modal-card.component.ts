@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit,TemplateRef } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CovidCards } from 'src/app/models/covid-cards.model';
+import { Localidades } from 'src/app/shared/enums/Localidades.enum';
 
 @Component({
   selector: 'modal-card',
@@ -10,27 +11,17 @@ import { CovidCards } from 'src/app/models/covid-cards.model';
 
 export class ModalCardComponent implements OnInit {
 
-  
-  
-  constructor(private modalService: BsModalService) {}
-  @Input() localizacaoModal!:CovidCards;
+  constructor() { }
   @Input() format!: Function;
-  
+
   @Input() modalRef: BsModalRef | undefined;
   @Input() close!: Function;
 
-  @Input() event:any;
-  @Input() escolha:string='';
+  @Input() localizacaoEscolhida: any;
+  @Input() choice: string = '';
 
-  localizacaoAsArray:Array<any>=[];
+  state: string = Localidades.ESTADO;
 
-  ngOnInit(): void {
-      console.log(this.localizacaoModal);
-      console.log(this.event);
-      
-  }
-
-
- 
+  ngOnInit(): void { }
 
 }
