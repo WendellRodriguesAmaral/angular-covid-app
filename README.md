@@ -4,12 +4,8 @@ Projeto que mostra em tempo real, dados do COVID-19 pelo Brasil e pelo mundo, at
 
 API utilizada: <https://covid19-brazil-api.now.sh/api/>
 
-<!-- ![Screenshot](./src/assets/imagens/mobile.png)
-![Screenshot](./src/assets/imagens/desktop.png) -->
 
-<img src='./src/assets/imagens/mobile.png' height=300>
-
-<img src='./src/assets/imagens/desktop.png' height=300>
+<img src='./src/assets/imagens/desktop.png' height=400>
 
 ## Para começar
 
@@ -34,7 +30,7 @@ npm start ou ng serve
 - [x] VS Code
 - [x] Postman
 - [x] GIT
-<br>
+
 - [x] Angular 12
 - [x] Bootstrap
 - [x] SASS
@@ -52,6 +48,7 @@ npm start ou ng serve
 - [x] Diretivas
 - [x] Pipes
 - [x] Flex box
+- [x] Resposividade
 
 ---
 
