@@ -1,14 +1,35 @@
-<button type="button" class="btn text-primary m-0 p-0" (click)="openModal(template)">Mais informações</button>
- 
-<ng-template #template >
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Mais informações</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
+<div class="modal-header">
+  <h3 class="text-center" *ngIf="event?.state || event?.country"> {{event?.state || event?.country }}</h3>
+  <img class="modal-header__flag"
+    src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{event?.uf}}.png"
+    onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
+    alt="Bandeira do(a) {{event?.state}}">
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <ng-template [ngIf]="escolha === 'Por estado'" [ngIfElse]="porPais"> <!-- analisar o if  (ENUM)-->
+    <p>DDD: {{event?.uid }}</p>
+    <p>Sigla: {{event?.uf }}</p>
+    <p>Casos: {{event?.cases}}</p>
+    <p>Mortes: {{event?.deaths }}</p>
+    <p>Infectados: {{event?.suspects || event?.confirmed }}</p>
+    <p>Recuperados: {{event?.refuses || event?.recovered }}</p>
+    <p>Última atualização: {{event?.datetime || event?.updated_at | date:'d/MM/yyyy'}}</p>
+  </ng-template>
+
+  <ng-template #porPais >
+    <p>Casos: {{event?.cases}}</p>
+    <p>Mortes: {{event?.deaths }}</p>
+    <p>Infectados: {{event?.suspects || event?.confirmed }}</p>
+    <p>Última atualização: {{event?.datetime || event?.updated_at | date:'d/MM/yyyy'}}</p>
+  </ng-template>
+
+  <div class="d-flex justify-content-end p-2 mt-5">
+    <a class="btn btn-primary w-50" href="https://pt.wikipedia.org/wiki/{{event?.state || event?.country}}"
+      target="_blank">Ir para wikipedia</a>
   </div>
-  <div class="modal-body" >
-    <ng-content></ng-content>
-  </div>
- 
-</ng-template>
+
+</div>

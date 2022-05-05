@@ -1,7 +1,5 @@
-
-
 <main class="covid">
-    
+
     <h1 class="text-center mb-5">Situação de COVID-19 no Brasil e no mundo.</h1>
     <h5>Listar por:</h5>
 
@@ -9,12 +7,12 @@
         <option class="item" [ngValue]="option" *ngFor="let option of options">{{option}}</option>
     </select>
 
-    <ng-template [ngIf]="!loading" [ngIfElse]="loadingTemplate"> 
-        <div class="cards" *ngIf="localizacoes.length > 0"  >
-            <div class="card cards__item" *ngFor="let localizacao of localizacoes">
+    <ng-template [ngIf]="!loading" [ngIfElse]="loadingTemplate">
+        <div class="cards" *ngIf="localizacoes.length > 0">
+            <div class="card cards__item" *ngFor="let localizacao of dataFormated; let i = index">
                 <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
                     onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
-                    class="cards__img-localizacao" alt="Bandeira do(a) {{localizacao.state}}"> 
+                    class="cards__img-localizacao" alt="Bandeira do(a) {{localizacao.state}}">
                 <div class="card-body">
                     <h5 class="card-title">
                         {{localizacao.state || localizacao.country }}
@@ -35,56 +33,39 @@
                         Infectados: {{formatValues(localizacao.suspects || localizacao.confirmed)}}
                     </li>
                 </ul>
-                <div class="card-body">  
-                    <modal-card > 
-                        <h3 class="text-center" *ngIf="localizacao.state || localizacao.country"> {{localizacao.state || localizacao.country }}</h3>
-
-                        <img  width="100" src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
-                        onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
-                        alt="Bandeira do(a) {{localizacao.state}}"> 
-                        <br>
-                        <br>
-                        <p *ngIf="localizacao.uid ">DDD: {{localizacao.uid }}</p>
-                        <p *ngIf="localizacao.uf ">Sigla: {{localizacao.uf }}</p>
-                        <p *ngIf="localizacao.cases">Casos: {{formatValues(localizacao.cases)}}</p>
-                        <p *ngIf="localizacao.deaths">Mortes: {{formatValues(localizacao.deaths) }}</p>
-                        <p *ngIf="localizacao.suspects || localizacao.confirmed">Infectados: {{formatValues(localizacao.suspects || localizacao.confirmed) }}</p>
-                        <p *ngIf="localizacao.refuses || localizacao.recovered">Recuperados: {{formatValues(localizacao.refuses || localizacao.recovered) }}</p>
-                        <p *ngIf="localizacao.datetime || localizacao.updated_at">Última atualização: {{localizacao.datetime || localizacao.updated_at | date:'d/MM/yy'}}</p>                       
-
-                        <div class="d-flex justify-content-end p-2">
-                            <a  class="btn btn-primary w-50" href="https://pt.wikipedia.org/wiki/{{localizacao.state || localizacao.country}}" target="_blank">Ir para wikipedia</a>
-                          </div>
-                    </modal-card>
-                </div>
+                <button type="button" class="btn text-primary m-2 p-1" (click)="openModal(modalCard, localizacao)">Mais
+                    informações
+                </button>
             </div>
         </div>
 
 
-        <button type="button" class="btn btn-primary button__modal" data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="!isCountry" >
+        <button type="button" class="btn btn-primary button__modal" data-bs-toggle="modal"
+            data-bs-target="#exampleModal" *ngIf="!isCountry">
             Pesquise pelo estado que quiser
         </button>
-        
+
 
         <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Pesquisar por COVID-19 no estado: </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pesquisar por COVID-19 no estado: </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body modal__links">
+                        <a class="modal--link" *ngFor="let localizacao of localizacoes"
+                            href="https://www.google.com/search?q=covid+{{localizacao.state || localizacao.country}}"
+                            target="_blank">
+                            <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
+                                alt="Bandeira do(a)  {{localizacao.state }}">
+                            <figcaption class="text-center">{{localizacao.uf }}</figcaption>
+                        </a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
                 </div>
-                <div class="modal-body modal__links">
-                    <a class="modal--link" *ngFor="let localizacao of localizacoes" href="https://www.google.com/search?q=covid+{{localizacao.state || localizacao.country}}"
-                        target="_blank">
-                        <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
-                        alt="Bandeira do(a)  {{localizacao.state }}"> 
-                        <figcaption class="text-center">{{localizacao.uf }}</figcaption> 
-                    </a>   
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>                
-                </div>
-            </div>
             </div>
         </div>
 
@@ -100,5 +81,6 @@
     </ng-template>
 </main>
 
-
-
+<ng-template #modalCard>
+    <modal-card [close]="closeModal" [event]="testeSujo" [escolha]="isSelected" ></modal-card>
+</ng-template>
