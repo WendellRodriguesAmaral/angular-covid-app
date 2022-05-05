@@ -70,7 +70,7 @@ export class CovidCardsComponent implements OnInit {
       });
   }
 
-  formatValues(value: number): string { 
+  formatValues(value: number): string {
     if (value == null) return 'Dado não encontrado.';
     return value.toString()
       .replace(/(\d{1,3})(\d{3})(\d{3})/, "$1.$2.$3")
@@ -80,10 +80,6 @@ export class CovidCardsComponent implements OnInit {
   openModal(template: TemplateRef<any>, local: any) {
     this.localizationData = local;
     this.modalRef = this.modalService.show(template);
-  }
-
-  closeModal() {
-    this.modalService.hide();
   }
 
   ngOnDestroy(): void {
