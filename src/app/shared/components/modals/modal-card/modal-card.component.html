@@ -7,7 +7,7 @@
     }}.png"
     onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
     alt="Bandeira do(a) {{ localizacaoEscolhida?.state }}" />
-  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="close()">
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide();">
     <span aria-hidden="true" class="visually-hidden">&times;</span>
   </button>
 </div>

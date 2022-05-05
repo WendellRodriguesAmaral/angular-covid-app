@@ -15,7 +15,6 @@ export class ModalCardComponent implements OnInit {
   @Input() format!: Function;
 
   @Input() modalRef: BsModalRef | undefined;
-  @Input() close!: Function;
 
   @Input() localizacaoEscolhida: any;
   @Input() choice: string = '';
