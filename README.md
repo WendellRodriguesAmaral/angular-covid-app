@@ -1,27 +1,57 @@
 # Covid-App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.13.
+Projeto que mostra em tempo real, dados do COVID-19 pelo Brasil e pelo mundo, atualizada diariamente.
 
-## Development server
+API utilizada: <https://covid19-brazil-api.now.sh/api/>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+<img src='./src/assets/imagens/desktop.png' height=400>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Para começar
 
-## Build
+#### 1- Clone o repositório
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+#### 2- Instale as dependencias
 
-## Running unit tests
+```
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### 1- Inicie o servidor de desenvolvimento
 
-## Running end-to-end tests
+```
+npm start ou ng serve
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+#### Tecnologias e ferramentas 📚
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- [x] VS Code
+- [x] Postman
+- [x] GIT
+
+- [x] Angular 12
+- [x] Bootstrap
+- [x] SASS
+- [x] API REST
+
+#### Conceitos aplicados 📚
+
+- [x] Loops
+- [x] Binds
+- [x] Expressão regular
+- [x] Consumo de API REST
+- [x] Enums
+- [x] Padrão BEM
+- [x] Condicionais
+- [x] Diretivas
+- [x] Pipes
+- [x] Flex box
+- [x] Resposividade
+
+---
+
+ <small>Me chame no meu  [Linkedin](https://www.linkedin.com/in/wendell-rodrigues-30011997/) Vamos conversar!  👋🏻</small>
+
+<small>Desenvolvido com ❤️ por Wendell Rodrigues</small>

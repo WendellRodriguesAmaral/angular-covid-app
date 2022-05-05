@@ -4,11 +4,11 @@
     <h5>Listar por:</h5>
 
     <select class="form-select w-25 covid__field" [(ngModel)]="isSelected" (ngModelChange)="filterCards($event)">
-        <option class="item" [ngValue]="option" *ngFor="let option of options">{{option}}</option>
+        <option class="item" [ngValue]="option" *ngFor="let option of SelectOptions">{{option}}</option>
     </select>
 
     <ng-template [ngIf]="!loading" [ngIfElse]="loadingTemplate">
-        <div class="cards" *ngIf="localizacoes.length > 0">
+        <div class="cards" *ngIf="locations.length > 0">
             <div class="card cards__item" *ngFor="let localizacao of dataFormated; let i = index">
                 <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
                     onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
@@ -39,12 +39,10 @@
             </div>
         </div>
 
-
         <button type="button" class="btn btn-primary button__modal" data-bs-toggle="modal"
             data-bs-target="#exampleModal" *ngIf="!isCountry">
             Pesquise pelo estado que quiser
         </button>
-
 
         <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -54,7 +52,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body modal__links">
-                        <a class="modal--link" *ngFor="let localizacao of localizacoes"
+                        <a class="modal--link" *ngFor="let localizacao of locations"
                             href="https://www.google.com/search?q=covid+{{localizacao.state || localizacao.country}}"
                             target="_blank">
                             <img src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{localizacao.uf}}.png"
@@ -68,7 +66,6 @@
                 </div>
             </div>
         </div>
-
     </ng-template>
 
     <ng-template #loadingTemplate>
@@ -82,5 +79,5 @@
 </main>
 
 <ng-template #modalCard>
-    <modal-card [close]="closeModal" [event]="testeSujo" [escolha]="isSelected" ></modal-card>
+    <modal-card [close]="closeModal" [localizacaoEscolhida]="localizationData" [choice]="isSelected" ></modal-card>
 </ng-template>

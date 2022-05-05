@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit,Output,TemplateRef } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Content, CovidCards } from '../models/covid-cards.model';
 import { CovidCardService } from '../services/covid-card.service';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Localidades } from '../shared/enums/Localidades.enum';
 
 
 @Component({
@@ -14,88 +15,75 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 export class CovidCardsComponent implements OnInit {
 
-  options:string[]=[
-    "Por estado",
-    "Por país"
-  ] 
+  SelectOptions: string[] = [
+    Localidades.ESTADO,
+    Localidades.PAIS
+  ];
 
-  isSelected:string=this.options[0];
-  loading:boolean = false; //para não começar renderizando o loading
-  localizacoes: CovidCards[] = []
+  isSelected: string = this.SelectOptions[0];
+  loading: boolean = false; //para não começar renderizando o loading
+  locations: CovidCards[] = [];
   unsubscribeAll: Subject<any>;
-  isCountry:boolean = false;
+  isCountry: boolean = false;
   modalRef?: BsModalRef;
-  event:EventEmitter<any> = new EventEmitter();
+  localizationData!: CovidCards;
+  dataFormated: Array<CovidCards> = [];
 
-  testeSujo:any;
-  dataFormated:Array<any>=[];
-  
-  constructor(private readonly service: CovidCardService,private modalService: BsModalService) {
+  constructor(private readonly service: CovidCardService, private modalService: BsModalService) {
     this.unsubscribeAll = new Subject();
   }
 
   ngOnInit(): void {
-    this.filterCards(this.isSelected)
+    this.filterCards(this.isSelected);
   }
 
-  filterCards(escolha:string){
-    let filter:string='';    
-    if(escolha==="Por país") {
-      filter = 'countries'; 
-      this.isCountry=true; 
-    }else{
-      this.isCountry=false;
+  filterCards(escolha: string) {
+    let filter: string = '';
+    if (escolha === Localidades.PAIS) {
+      filter = 'countries';
+      this.isCountry = true;
+    } else {
+      this.isCountry = false;
     }
-    this.getCards(filter)
+    this.getCards(filter);
   }
 
-  getCards(escolha:string): void {   
-    this.loading=true;
+  getCards(escolha: string): void {
+    this.loading = true;
     this.service.getCovidsData(escolha)//observable
       .pipe(
         takeUntil(this.unsubscribeAll),
-        finalize(()=>this.loading=false) ) // depois que termina a requisição
+        finalize(() => this.loading = false)) // depois que termina a requisição
       .subscribe((dados: Content<Array<CovidCards>>) => {
-            this.localizacoes = dados.data
-
-            this.dataFormated = this.localizacoes.map((res:any)=>{  
-              
-              if (escolha === "countries"){ //angela falou de 1 retorno so, se ela falou então da pra fazer (ternario)
-                return{
-                  ...res,
-                  cases: this.formatValues(res?.cases ),
-                  deaths: this.formatValues(res?.deaths),
-                  confirmed: this.formatValues(res?.confirmed)                  
-                }   
-              } else{
-                return {
-                  ...res,
-                  cases: this.formatValues(res?.cases ),
-                  deaths: this.formatValues(res?.deaths),
-                  suspects: this.formatValues(res?.suspects),
-                  refuses: this.formatValues(res?.refuses)     
-
-                }
-              }               
-            } )
-      });     
+        this.locations = dados.data;
+        this.dataFormated = this.locations.map((res: any) => {
+          Object.seal(res);
+          return {
+            ...res,
+            cases: this.formatValues(res?.cases),
+            deaths: this.formatValues(res?.deaths),
+            suspects: this.formatValues(res?.suspects),
+            refuses: this.formatValues(res?.refuses),
+            confirmed: this.formatValues(res?.confirmed)
+          }
+        })
+      });
   }
 
-  formatValues(value: number): string { //pode ser um PIPE
-     
-    if(value == null) return 'Dado não encontrado.';
+  formatValues(value: number): string { 
+    if (value == null) return 'Dado não encontrado.';
     return value.toString()
       .replace(/(\d{1,3})(\d{3})(\d{3})/, "$1.$2.$3")
-      .replace(/(\d{1,3})(\d{3})/, "$1.$2")
+      .replace(/(\d{1,3})(\d{3})/, "$1.$2");
   }
 
-  openModal(template: TemplateRef<any> , content:any) {
-    this.testeSujo=content;
+  openModal(template: TemplateRef<any>, local: any) {
+    this.localizationData = local;
     this.modalRef = this.modalService.show(template);
   }
 
-  closeModal(){
-    this.modalService.hide()
+  closeModal() {
+    this.modalService.hide();
   }
 
   ngOnDestroy(): void {
