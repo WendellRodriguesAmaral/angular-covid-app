@@ -1,14 +1,35 @@
-<button type="button" class="btn text-primary m-0 p-0" (click)="openModal(template)">Mais informações</button>
- 
-<ng-template #template >
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Mais informações</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
+<div class="modal-header">
+  <h3 class="text-center" *ngIf="localizacaoEscolhida?.state || localizacaoEscolhida?.country">
+    {{ localizacaoEscolhida?.state || localizacaoEscolhida?.country }}
+  </h3>
+  <img class="modal-header__flag" src="https://devarthurribeiro.github.io/covid19-brazil-api/static/flags/{{
+      localizacaoEscolhida?.uf
+    }}.png"
+    onerror="this.src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcpQs9Admjh-kxv9mAi5zymsxePX_7G37YcWCT8_fF-lNySC22lIIUJKvBqPM2fxbmv1Y&usqp=CAU'"
+    alt="Bandeira do(a) {{ localizacaoEscolhida?.state }}" />
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>Casos: {{ localizacaoEscolhida?.cases }}</p>
+  <p>Mortes: {{ localizacaoEscolhida?.deaths }}</p>
+  <p>Infectados: {{ localizacaoEscolhida?.suspects || localizacaoEscolhida?.confirmed }}</p>
+
+  <ng-template [ngIf]="choice === state">
+    <p>DDD: {{ localizacaoEscolhida?.uid }}</p>
+    <p>Sigla: {{ localizacaoEscolhida?.uf }}</p>
+    <p>Recuperados: {{ localizacaoEscolhida?.refuses }}</p>
+  </ng-template>
+
+  <p>
+    Última atualização:
+    {{ localizacaoEscolhida?.datetime || localizacaoEscolhida?.updated_at | date: "d/MM/yyyy" }}
+  </p>
+
+  <div class="d-flex justify-content-end p-2 mt-5">
+    <a class="btn btn-primary w-50"
+      href="https://pt.wikipedia.org/wiki/{{ localizacaoEscolhida?.state || localizacaoEscolhida?.country }}"
+      target="_blank">Ir para wikipedia</a>
   </div>
-  <div class="modal-body" >
-    <ng-content></ng-content>
-  </div>
- 
-</ng-template>
+</div>
