@@ -19,5 +19,5 @@ app.get('/*' , (req,res)=>{
 });
 
 //ouvir a porta que heroku disponibilizar
-app.listen(process.env.PORT);
+app.listen(process.env.PORT || 8080);
 
