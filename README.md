@@ -1,7 +1,7 @@
 # Covid-App
 
-#### Projeto Publicado: 
-<a target="_blank" https://covid-cards.netlify.app>Clique aqui</a>
+#### Projeto Publicado: [Clique aqui](https://covid-cards.netlify.app)
+
 
 Projeto que mostra em tempo real, dados do COVID-19 pelo Brasil e pelo mundo, atualizada diariamente.
 
