@@ -1,5 +1,8 @@
 # Covid-App
 
+#### Projeto Publicado: https://covid-cards.netlify.app
+
+
 Projeto que mostra em tempo real, dados do COVID-19 pelo Brasil e pelo mundo, atualizada diariamente.
 
 API utilizada: <https://covid19-brazil-api.now.sh/api/>

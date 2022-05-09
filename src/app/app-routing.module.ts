@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CovidCardsComponent } from './covid-cards/covid-cards.component';
 
 const routes: Routes = [
-  {path:'cards', component: CovidCardsComponent},
   {path:'', redirectTo:"cards",pathMatch:"full"},
+  {path:'cards', component: CovidCardsComponent},
 ];
 
 @NgModule({
